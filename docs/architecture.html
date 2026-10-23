@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+body{margin:0;background:#0D1017;font-family:'Segoe UI',Helvetica,Arial,sans-serif;color:#E6EAF0}
+.wrap{width:1400px;height:770px;position:relative}
+h1{position:absolute;left:40px;top:22px;margin:0;font-size:30px;letter-spacing:-.5px}
+h1 span{color:#C6FF3D}
+.sub{position:absolute;left:40px;top:64px;color:#8b95a5;font-size:17px}
+.box{position:absolute;border:1.5px solid #2f3646;background:#161B25;border-radius:14px;padding:14px 16px;box-sizing:border-box}
+.box h3{margin:0 0 6px 0;font-size:18px}
+.box p{margin:0;color:#aab3c2;font-size:14px;line-height:1.4}
+.ai{border-color:#3DD8FF88}.ai h3{color:#6FE3FF}
+.sb{border-color:#C6FF3D88}.sb h3{color:#C6FF3D}
+.st{border-color:#FF5C7A88}.st h3{color:#FF8FA3}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:8px;margin-right:4px}
+.t1{background:#3DD8FF22;color:#6FE3FF}.t2{background:#C6FF3D22;color:#C6FF3D}.t3{background:#FF5C7A22;color:#FF8FA3}
+svg{position:absolute;left:0;top:0}
+.lbl{font-size:13px;fill:#aab3c2}
+</style></head><body><div class="wrap">
+<svg width="1400" height="760">
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b7587"/></marker>
+<marker id="g" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C6FF3D"/></marker>
+<marker id="r" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#FF5C7A"/></marker></defs>
+<!-- student to UI -->
+<line x1="230" y1="400" x2="300" y2="400" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+<!-- UI to AI boxes -->
+<line x1="560" y1="300" x2="640" y2="190" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+<line x1="560" y1="400" x2="640" y2="400" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+<line x1="560" y1="500" x2="640" y2="610" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+<!-- AI to sandbox -->
+<line x1="940" y1="190" x2="1020" y2="330" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+<line x1="940" y1="380" x2="1020" y2="380" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+<!-- reject loop -->
+<path d="M1020,450 L945,450" fill="none" stroke="#FF5C7A" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#r)"/>
+<text x="948" y="472" class="lbl" fill="#FF8FA3">rejected:</text>
+<text x="948" y="489" class="lbl" fill="#FF8FA3">retry ≤ 3</text>
+<!-- sandbox accept to UI -->
+<path d="M1185,470 L1185,725 L430,725 L430,556" fill="none" stroke="#C6FF3D" stroke-width="2" marker-end="url(#g)"/>
+<text x="640" y="745" class="lbl" fill="#C6FF3D">accepted: only verified bugs, fixes and tests reach the student</text>
+<!-- progress -->
+<line x1="230" y1="600" x2="298" y2="530" stroke="#6b7587" stroke-width="2" marker-end="url(#a)"/>
+</svg>
+<h1>Glitch<span>Gym</span> architecture</h1>
+<div class="sub">The model proposes, the sandbox disposes.</div>
+
+<div class="box" style="left:40px;top:340px;width:190px;height:120px"><h3>🎓 Student</h3><p>Pastes an error, or starts a drill. Edits code, runs tests.</p></div>
+
+<div class="box" style="left:300px;top:250px;width:260px;height:300px"><h3>Streamlit app</h3>
+<p>🩺 <b>Diagnose</b> – explain my error<br>🏋️ <b>Gym</b> – break, hint, verify fix<br>📈 <b>Progress</b> – mastery + heatmap<br><br>Hint ladder · Blind mode<br>Export / import progress</p>
+<span class="tag t3">session state</span></div>
+
+<div class="box st" style="left:30px;top:580px;width:200px;height:110px"><h3>Adaptive picker</h3><p>Weakest category + bugs hit in own code</p></div>
+
+<div class="box ai" style="left:640px;top:110px;width:300px;height:160px"><h3>① Diagnose prompt</h3><p>Error → meaning, root cause @ line, trace, minimal fix, rule of thumb, quick-check question, bug category.</p><span class="tag t1">Gemini JSON mode</span></div>
+<div class="box ai" style="left:640px;top:320px;width:300px;height:160px"><h3>② Bug injector</h3><p>Working code + tests + target category → one realistic mutant, 3-step hints, explanation. Writes tests for pasted code.</p><span class="tag t1">Gemini · Groq fallback</span></div>
+<div class="box ai" style="left:640px;top:530px;width:300px;height:140px"><h3>③ Socratic coach</h3><p>Reads the student's current attempt + test results → one question, never the fix.</p><span class="tag t1">Gemini</span></div>
+
+<div class="box sb" style="left:1020px;top:330px;width:330px;height:140px"><h3>🧪 Sandbox verifier</h3><p>Isolated subprocess, timeout, CPU/memory caps. Accept mutant only if: original passes · parses · same functions · ≤4 lines changed · no hang · ≥1 test fails.</p></div>
+
+<div class="box" style="left:1020px;top:110px;width:330px;height:150px"><h3>📦 Offline bug bank</h3><p>19 hand-verified bugs across 10 categories on 12 exercises. Serves drills if no key, rate-limited, or 3 rejections.</p><span class="tag t2">never dead-ends</span></div>
+</div></body></html>
