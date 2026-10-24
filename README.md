@@ -2,7 +2,7 @@
 
 **The debugging coach that breaks your code on purpose — so you learn to fix anyone's.**
 
-**▶ Live app: https://glitchgym.streamlit.app**
+**▶ Live app: https://glitchgym.streamlit.app** · **🎬 Demo video: https://youtu.be/RNQ1j7HOCHs** · **Devpost: https://devpost.com/software/glitchgym**
 
 Built for **GLITCHATHON 2026** (theme: *Build with AI*) · Track: **2. Glitch Detective**
 

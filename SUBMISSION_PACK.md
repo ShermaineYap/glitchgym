@@ -4,10 +4,19 @@ Deadline: **Sun 25 Oct 2026, 5:00 pm IST = 7:30 pm Malaysia time.** Aim to submi
 
 ---
 
-## 0. Status (updated Sat 24 Oct, 6:15 pm MYT)
+## 0. Status — ✅ SUBMITTED (Sat 24 Oct 2026, ~6:45 pm MYT)
 
-| Step | Status |
+| Item | Link |
 |---|---|
+| Devpost project (submitted to Glitchathon, opted into prize) | https://devpost.com/software/glitchgym |
+| Live app | https://glitchgym.streamlit.app |
+| Code | https://github.com/ShermaineYap/glitchgym |
+| Demo video (Unlisted, embedding on, 2:07, AI voiceover) | https://youtu.be/RNQ1j7HOCHs |
+
+You can still edit the Devpost entry until 7:30 pm MYT Sun 25 Oct. Winners announced 1 Nov.
+Keep the Streamlit app awake: open it once a day so judges don't hit the "app is asleep" screen (free apps sleep after inactivity; anyone can wake it with one click).
+
+---|---|
 | Registered on Devpost | ✅ done |
 | Gemini API key | ✅ done (in Streamlit Secrets) |
 | Public GitHub repo | ✅ https://github.com/ShermaineYap/glitchgym |
