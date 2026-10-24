@@ -17,7 +17,7 @@ GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:ge
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 # Fast models first; each one that is slow, overloaded or unavailable falls through to the next.
-DEFAULT_GEMINI_MODELS = ["gemini-2.5-flash", "gemini-flash-lite-latest", "gemini-flash-latest"]
+DEFAULT_GEMINI_MODELS = ["gemini-flash-lite-latest", "gemini-flash-latest"]
 DEFAULT_GROQ_MODEL = "llama-3.3-70b-versatile"
 
 
