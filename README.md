@@ -32,7 +32,7 @@ Off-by-one · Boundary comparison · Mutable default argument · Aliasing · Mis
 ## Run it locally
 
 ```bash
-git clone https://github.com/<your-username>/glitchgym.git
+git clone https://github.com/ShermaineYap/glitchgym.git
 cd glitchgym
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
