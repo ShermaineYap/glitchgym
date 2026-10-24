@@ -2,6 +2,8 @@
 
 **The debugging coach that breaks your code on purpose — so you learn to fix anyone's.**
 
+**▶ Live app: https://glitchgym.streamlit.app**
+
 Built for **GLITCHATHON 2026** (theme: *Build with AI*) · Track: **2. Glitch Detective**
 
 AI assistants now fix students' bugs for them. The error disappears, and so does the learning. GlitchGym flips it:
@@ -16,7 +18,7 @@ AI assistants now fix students' bugs for them. The error disappears, and so does
 
 | Where | Model | What it does | How it's kept honest |
 |---|---|---|---|
-| Diagnose | Gemini (JSON mode, T=0.2) | Error → meaning, root cause, trace, fix, rule of thumb, quiz, bug category | Suggested fix is run in the sandbox; result shown as ✅ / ⚠️ |
+| Diagnose | Gemini Flash-Lite (JSON mode, T=0.2) | Error → meaning, root cause, trace, fix, rule of thumb, quiz, bug category | Suggested fix is run in the sandbox; result shown as ✅ / ⚠️ |
 | Bug injector | Gemini (T=0.8), Groq Llama 3.3 70B fallback | Working code + tests + target category → one mutant, 3 hints, explanation | Verifier: parses · same functions · ≤4 lines changed · no hang · ≥1 failing test. Rejections go back to the model with the reason (≤3 tries) |
 | Test writer | Gemini (T=0.2) | Writes tests for code the student pastes | Only tests the student's working code actually passes are kept |
 | Socratic coach | Gemini (T=0.5) | Reads the current attempt + test results, returns one nudge | Prompted never to reveal the fix; falls back to static hints |
