@@ -563,6 +563,10 @@ sandbox · pandas · Plotly.
 """)
     if _exists("docs/architecture.png"):
         st.image("docs/architecture.png", width="stretch")
+    with st.expander("🩺 AI health check (times each Gemini model)"):
+        if st.button("Run health check"):
+            with st.spinner("Pinging models..."):
+                st.dataframe(pd.DataFrame(llm.health_check()), hide_index=True, width="stretch")
 
 
 def _exists(p: str) -> bool:
