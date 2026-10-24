@@ -4,10 +4,22 @@ Deadline: **Sun 25 Oct 2026, 5:00 pm IST = 7:30 pm Malaysia time.** Aim to submi
 
 ---
 
-## 0. Things only you can do (in this order)
+## 0. Status (updated Sat 24 Oct, 6:15 pm MYT)
 
-| # | Step | Time |
-|---|---|---|
+| Step | Status |
+|---|---|
+| Registered on Devpost | ✅ done |
+| Gemini API key | ✅ done (in Streamlit Secrets) |
+| Public GitHub repo | ✅ https://github.com/ShermaineYap/glitchgym |
+| Live app | ✅ https://glitchgym.streamlit.app (Gemini Flash-Lite, ~3 s responses, all AI features tested) |
+| Screenshots with AI on | ✅ in repo and uploaded to Devpost |
+| Devpost draft | ✅ name, pitch, full story, built-with, both links, 5 captioned images, prize opt-in |
+| Organiser email | ⏳ waiting for your OK |
+| **Demo video (≤3 min, YouTube, Unlisted, embedding on)** | ⏳ **you record it (script in section 3)** |
+| Paste video URL into Devpost → Project details → "Video demo link" | ⏳ |
+| Tick terms box → **Submit project** | ⏳ before 7:30 pm MYT Sun 25 Oct |
+
+---|---|---|
 | 1 | Register on https://glitchathon.devpost.com ("Join hackathon"). Then send the organiser email (section 4). | 5 min |
 | 2 | Get a free Gemini key at https://aistudio.google.com/apikey | 2 min |
 | 3 | Run locally with the key (`cp .env.example .env`, paste key, `streamlit run app.py`). Do one Diagnose example and one drill to confirm the sidebar shows **Gemini ✓** and drills say "Gemini (...)" not "Offline bug bank". | 10 min |
