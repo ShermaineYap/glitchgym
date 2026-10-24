@@ -60,22 +60,39 @@ def parse_json(text: str) -> dict:
         raise
 
 
+def _thinking(model: str) -> dict:
+    """Keep 'thinking' minimal: these are short, well-specified JSON tasks and the
+    sandbox verifies the output anyway, so speed matters more than deliberation."""
+    if "2.5" in model or "2.0" in model:
+        return {"thinkingBudget": 0}
+    return {"thinkingLevel": "low"}
+
+
+def _post_gemini(model: str, key: str, body: dict, timeout: float) -> requests.Response:
+    return requests.post(
+        GEMINI_URL.format(model=model),
+        headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+        json=body,
+        timeout=timeout,
+    )
+
+
 def _gemini(system: str, user: str, temperature: float, timeout: float) -> tuple[str, str]:
     key = _secret("GEMINI_API_KEY")
     models = [m for m in [_secret("GEMINI_MODEL")] if m] + DEFAULT_GEMINI_MODELS
-    body = {
-        "systemInstruction": {"parts": [{"text": system}]},
-        "contents": [{"role": "user", "parts": [{"text": user}]}],
-        "generationConfig": {"temperature": temperature, "responseMimeType": "application/json"},
-    }
     last = None
     for model in dict.fromkeys(models):
-        resp = requests.post(
-            GEMINI_URL.format(model=model),
-            headers={"x-goog-api-key": key, "Content-Type": "application/json"},
-            json=body,
-            timeout=timeout,
-        )
+        body = {
+            "systemInstruction": {"parts": [{"text": system}]},
+            "contents": [{"role": "user", "parts": [{"text": user}]}],
+            "generationConfig": {"temperature": temperature, "responseMimeType": "application/json",
+                                 "thinkingConfig": _thinking(model)},
+        }
+        resp = _post_gemini(model, key, body, timeout)
+        if resp.status_code == 400 and "thinking" in resp.text.lower():
+            # This model doesn't accept that thinking setting: retry with its defaults.
+            body["generationConfig"].pop("thinkingConfig", None)
+            resp = _post_gemini(model, key, body, timeout)
         if resp.status_code == 404:  # model name not available on this key
             last = f"{model}: 404"
             continue
@@ -109,7 +126,7 @@ def _groq(system: str, user: str, temperature: float, timeout: float) -> tuple[s
     return resp.json()["choices"][0]["message"]["content"], f"Groq ({model})"
 
 
-def ask_json(system: str, user: str, temperature: float = 0.4, timeout: float = 45) -> tuple[dict, str]:
+def ask_json(system: str, user: str, temperature: float = 0.4, timeout: float = 75) -> tuple[dict, str]:
     """Return (parsed_json, provider_label). Tries Gemini, then Groq."""
     errors = []
     providers = []
